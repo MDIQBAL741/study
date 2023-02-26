@@ -9,23 +9,45 @@
 <div class="container">
 <div class="col-md-8 offset-md-2">
 <div class="my-card mt-3">
+
+<div  th:if="${session.message}" th:classappend="${session.message.type}"class="alert" role="alert">
+  <p th:text="${session.message.content}"></p>
+	  
+</div>
 <h1 class="text-center">Register Here</h1>
-<form action="" th:action="@{/do_register}" method="post">
+<form action="" th:action="@{/do_register}" method="post" th:object="${user}">
 <div class="form-group">
     <label for="name_field">Your Name</label>
-    <input type="text" class="form-control" id="name_field" aria-describedby="emailHelp" placeholder="Enter Name" required>
+    <input name="name" type="text" class="form-control"
+    th:classappend="${#fields.hasErrors('name')?'is-invalid':''}"
+     id="name_field" aria-describedby="emailHelp" placeholder="Enter Name" required
+    th:value="${user.name}"/>
+    
+     <div   id="validationCustom03" class="invalid-feedback" th:each="e:${#fields.errors('name')}"
+     th:text="${e}">
+        
+      </div>
     
   </div>
-  <div class="form-group">
+ <div class="form-group">
     <label for="email_field">Your Email</label>
-    <input type="email" class="form-control" id="email_field" aria-describedby="emailHelp" placeholder="Enter Email" required>
-    
+    <input name="email" type="email" class="form-control" id="email_field" aria-describedby="emailHelp" placeholder="Enter Email" required
+    th:value="${user.email}">
+    </div>
   
   <div class="form-group">
     <label for="password_field">Your Password</label>
-    <input type="password" class="form-control" id="password_field" aria-describedby="emailHelp" placeholder="Enter Password" required>
+    <input name="password" type="password" class="form-control" id="password_field" aria-describedby="emailHelp" placeholder="Enter Password" required>
     
   </div>
+  <div class="form-group form-check ">
+  <input type="checkbox"
+  name="agreement"
+  class="form-check-input"
+  id="agreement"/>
+  <label for="agreement">Accept terms and condition</label>
+  </div>
+  
   <div class="container text-center">
   <button type="submit" class="btn bg-primary text-white">Submit</button>
    <button type="reset" class="btn btn-warning">Reset</button>

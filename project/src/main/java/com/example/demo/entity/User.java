@@ -3,6 +3,9 @@ package com.example.demo.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -19,6 +22,8 @@ public class User {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 private int id;
+	@NotBlank(message="value required")
+	@Size(min=2,max=20,message="min 2 and max 20")
 private String name;
 @Column(unique=true)
 private String email;
@@ -83,6 +88,11 @@ public String getAbout() {
 }
 public void setAbout(String about) {
 	this.about = about;
+}
+@Override
+public String toString() {
+	return "User [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", role=" + role
+			+ ", imageurl=" + imageurl + ", enabled=" + enabled + ", about=" + about + ", contact=" + contact + "]";
 }
 
 
